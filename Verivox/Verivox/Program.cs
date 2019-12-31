@@ -29,7 +29,8 @@ namespace Verivox
             {
                 Console.WriteLine($"Name : {offer.Name}, TotalCost : {offer.TotalCost}");
             }
-
+            Console.WriteLine();
+            
             consumption = 4500M;
             Console.WriteLine($"Consumption : {consumption}");
 
@@ -38,6 +39,7 @@ namespace Verivox
             {
                 Console.WriteLine($"Name : {offer.Name}, TotalCost : {offer.TotalCost}");
             }
+            Console.WriteLine();
 
             consumption = 6000M;
             Console.WriteLine($"Consumption : {consumption}");
