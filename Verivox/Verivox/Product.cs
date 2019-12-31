@@ -20,7 +20,7 @@ namespace Verivox
 
         protected string _name;
 
-        public string Name=> _name;
+        public string Name => _name;
 
         public abstract decimal GetFixedAnnualCost();
 

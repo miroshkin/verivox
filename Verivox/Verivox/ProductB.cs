@@ -12,7 +12,7 @@ namespace Verivox
         {
         }
 
-        public ProductB( string name) : base(name)
+        public ProductB(string name) : base(name)
         {
         }
 
