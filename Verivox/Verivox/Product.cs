@@ -22,13 +22,16 @@ namespace Verivox
 
         public string Name => _name;
 
-        public abstract decimal GetFixedAnnualCost();
+        public abstract Task<decimal> GetFixedAnnualCost();
 
-        public abstract decimal GetVariableAnnualCost(decimal consumption);
+        public abstract Task<decimal> GetVariableAnnualCost(decimal consumption);
 
-        public decimal GetTotalAnnualCosts(decimal consumption)
+        public async Task<decimal> GetTotalAnnualCosts(decimal consumption)
         {
-            return GetFixedAnnualCost() + GetVariableAnnualCost(consumption);
+            decimal fixedPart = await GetFixedAnnualCost();
+            decimal variablePart = await GetVariableAnnualCost(consumption);
+
+            return  fixedPart + variablePart;
         }
 
     }

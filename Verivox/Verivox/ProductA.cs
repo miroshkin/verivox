@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Verivox
@@ -16,16 +17,21 @@ namespace Verivox
         {
         }
 
-        public override decimal GetFixedAnnualCost()
+
+        public override async Task<decimal> GetFixedAnnualCost()
         {
             decimal costPerMonth = 5M;
             ushort monthCount = 12;
 
+            Thread.Sleep(1000);
+
             return costPerMonth * monthCount;
         }
 
-        public override decimal GetVariableAnnualCost(decimal consumption)
+        public override async Task<decimal> GetVariableAnnualCost(decimal consumption)
         {
+            Thread.Sleep(1000);
+
             return consumption * .22M;
         }
     }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,11 +10,38 @@ namespace Verivox
 {
      public class TariffModel
     {
-        private List<Product> _products;
+        private ObservableCollection<Product> _products;
 
         public TariffModel()
         {
-            _products = new List<Product>();
+
+            _products = new ObservableCollection<Product>();
+            _products.CollectionChanged += ProductsCollectionChanged;
+        }
+
+        private void ProductsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            // They removed something. 
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+            {
+                Console.WriteLine("Here are the OLD items:");
+                foreach (Product p in e.OldItems)
+                {
+                    Console.WriteLine(p.Name.ToString());
+                }
+                Console.WriteLine();
+            }
+
+            // They added something. 
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                // Now show the NEW items that were inserted.
+                Console.WriteLine("Here are the NEW items:");
+                foreach (Product p in e.NewItems)
+                {
+                    Console.WriteLine(p.Name.ToString());
+                }
+            }
         }
 
         /// <summary>
@@ -81,8 +110,10 @@ namespace Verivox
                     throw new ArgumentException("Consumption should be non-negative");
                 }
 
+                
+
                 //Offers list creating
-                List<Offer> offers = _products.Select(p => new Offer(p.Name, p.GetTotalAnnualCosts(consumption)))
+                List<Offer> offers = _products.AsParallel().Select(p => new Offer(p.Name, p.GetTotalAnnualCosts(consumption).Result))
                     .ToList();
 
                 //In-place sorting
